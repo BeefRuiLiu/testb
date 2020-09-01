@@ -1,0 +1,10 @@
+{
+  "ProjectName": "TCP",
+
+  "Tcpport" : "13001",
+  "TcpAddress" : "192.168.3.13",
+  "RedisAddress":"47.104.208.7:6379",
+  "RedisPassWord":"qwer",
+  "DataSourceName" : "rpgame:20170105@tcp(47.104.208.7:3306)/rpgame?charset=utf8&loc=Local"
+}
+

@@ -1,0 +1,50 @@
+syntax = "proto2";
+
+package pb;
+
+// 响应命令
+message ResponseCmd {
+	required ResSimple simple = 1;          				// 简单消息
+	optional TcpResponseLogin reslogin = 2;    			// 登陆
+	optional TcpResponseEnter resenterroom = 3;    			// 响应匹配房间
+	optional TcpResponseOut resoutroom = 4;    			// 响应退出房间
+	optional RoomInfo roominfo = 5;    			// 房间信息
+
+}
+
+// 回复简单消息
+message ResSimple {
+	required SimpleTag tag = 1;     // 消息类型
+	optional int32 intValue = 2;	// int 消息数值
+	optional string strValue = 3;	// str 消息数值
+	optional bool  boolValue = 4;   // bool
+	repeated int32  intArr = 5;     // intArr
+	repeated string  strArr = 6;    // strArr
+	enum SimpleTag {
+		RES_LOGIN_GAME = 1;		    // 登陆游戏
+		RES_Enter_ROOM = 2;		    // 匹配房间回复
+		RES_Out_ROOM = 3;		    // 匹配房间回复
+		RES_ROOM_INFO = 4;		    // roominfo
+	}
+}
+message TcpResponseEnter{
+	required int32 roomid = 1;
+	required int32 count = 2;     //房间人数
+	required bool isbegin = 3;     //是否开始
+}
+message TcpResponseOut{
+	optional int32 isout = 1;
+
+}
+message RoomInfo{
+	required int32 roomid = 1;
+	required int32 count = 2;     //房间人数
+	required bool isbegin = 3;     //是否开始
+	repeated int32  userids = 4;		//房间内玩家usrid
+}
+
+message TcpResponseLogin{
+	required bool result = 1;
+	required int32 uid = 2;
+	required int32 udpPort = 3;
+}

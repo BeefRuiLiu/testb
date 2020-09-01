@@ -1,0 +1,17 @@
+syntax = "proto2";
+
+option optimize_for = LITE_RUNTIME;
+
+package pb;
+
+
+message TcpLogin{
+	required string token = 1;
+}
+
+message TcpResponseLogin{
+	required bool result = 1;
+	required int32 uid = 2;
+	required int32 udpPort = 3;
+                required bool reconnect = 4;
+}

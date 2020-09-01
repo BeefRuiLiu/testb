@@ -1,0 +1,65 @@
+syntax = "proto2";
+
+package pb;
+
+enum CommandCode
+{
+	NONE = 1;
+	ACK = 2;              //确认
+	CONNECT = 3;          //连接请求
+	ACKCONNECT = 4;       //连接请求确认
+	DISCONNECT = 5;       //断线请求
+	ACKDISCONNECT = 6;    //断线请求确认
+	PING = 7;             //ping值
+	SENDRELIABLE = 8;     //可靠消息
+	SENDUNRELIABLE = 9;   //不可靠消息
+	SENDFRAGMENT = 10;    //片段消息
+	COUNT = 11;
+}
+//required：必须初始化字段，如果没有赋值，在数据序列化时会抛出异常
+//optional：可选字段，可以不必初始化。
+//repeated：数据可以重复
+message UdpHeader{
+	required int32 peerID = 1;
+	required int64 sentTime = 2;
+	required int32 uno = 3;
+}
+
+message CommandHeader{
+	required CommandCode commandCode = 1;
+	required int32 flag = 2;
+}
+
+message Ack{
+	required int32 sn = 1;
+	repeated int32 expectedSn = 2;
+}
+
+message Connect{
+	required int32 clientPeerID = 1;
+	required int32 mtu = 2;
+	required int32 connectID = 3;
+	optional bytes data = 4;
+}
+
+
+message AckConnect{
+	required int32 peerID = 1;
+	required int32 mtu = 2;
+	repeated int32 connectID = 3;
+}
+
+message Disconnect{
+	optional int32 reason = 1;
+}
+
+message Send{
+	required int32 sn = 1;
+	required int32 dataLength = 2;
+}
+
+message SendMultiFragment{
+	required int64 totalLength = 1;
+	required int32 fragCount = 2;
+	required int32 fragSn = 3;
+}

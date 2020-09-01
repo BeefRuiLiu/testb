@@ -1,0 +1,57 @@
+syntax = "proto2";
+
+package pb;
+
+// TCP-------------请求命令 //UDP-----对战请求消息
+message RequestCmd {
+	required ReqSimple simple = 1;          	// 简单消息
+	optional TcpLogin reqlogin = 2;    			// 登陆
+	optional TcpEnterRoom enterroom = 3;    			// 匹配房间
+	optional TcpOutRoom outroom = 4;    			// 退出房间
+	optional TcpEntertGame entergame = 5;    			// 进入游戏
+	optional UDPPlayingGame playinggame = 6;    			// 游戏中操作
+
+}
+// 请求简单消息
+message ReqSimple {
+	required SimpleTag tag = 1;     // 消息类型
+	optional int32 intValue = 2;	// int 消息数值
+	optional string strValue = 3;	// str 消息数值
+	optional bool  boolValue = 4;   // bool
+	repeated int32  intArr = 5;     // intArr
+	repeated string  strArr = 6;    // strArr
+	enum SimpleTag {
+		REQ_LOGIN_GAME = 1;		    // 登陆游戏
+		REQ_Enter_ROOM = 2;		    // 匹配房间
+		REQ_Out_ROOM = 3;		    // 退出房间
+		REQ_Enter_Game = 4;		    // 进入游戏
+		REQ_Playing_Game = 5;		    // 游戏中操作
+	}
+}
+message TcpLogin{
+	required string token = 1;
+	required int32 userid = 2;
+}
+message TcpEnterRoom{
+	required int32 userid = 1;
+	optional int32 tempval = 2;
+}
+
+message TcpOutRoom{
+	required int32 userid = 1;
+	required int32 roomid = 2;
+}
+message TcpEntertGame{
+	required int32 userid = 1;
+	required int32 roomid = 2;
+	required string port = 3;
+}
+
+//UDP-----
+message UDPPlayingGame{
+	required int32 userid = 1;
+	required int32 roomid = 2;
+	required int32 playingid = 3;		//操作id
+}
+
+
